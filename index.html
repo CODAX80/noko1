@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="NOKO.AI - Generative Art Experience. Exploring the boundaries between human creativity and artificial intelligence.">
-  <meta name="theme-color" content="#292F60">
   <title>NOKO.AI | Generative Art Experience</title>
   <!-- Import Space Grotesk font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -346,43 +344,6 @@
         grid-column: span 6;
         grid-row: span 2;
       }
-      
-      /* Remove the vertical gradient switch - keep horizontal gradient on all screen sizes */
-      body {
-        background: linear-gradient(90deg, var(--color-1) 0%, var(--color-1) 50%, var(--color-4) 50%, var(--color-4) 100%);
-      }
-      
-      /* Reset marquee animation to original */
-      .marquee-content {
-        animation-duration: 40s;
-      }
-      
-      .marquee-item {
-        margin: 0 20px;
-      }
-      
-      /* Reset original positions */
-      .hamburger {
-        top: 30px;
-        right: 30px;
-        width: 60px;
-        height: 60px;
-        padding: 15px;
-      }
-      
-      .logo {
-        top: 30px;
-        left: 30px;
-        font-size: 1.5rem;
-        padding: 10px 15px;
-      }
-      
-      /* Reset VOILA button */
-      .voila-container {
-        top: 100px;
-        right: 20%;
-        transform: translateX(50%);
-      }
     }
     
     @media (max-width: 480px) {
@@ -395,33 +356,411 @@
         grid-row: span 1;
         aspect-ratio: 16/9; /* Switch to landscape on very small screens */
       }
+    }
+    
+    .byline {
+      font-size: 1rem;
+      letter-spacing: 1px;
+      padding: 15px 20px;
+      text-transform: uppercase;
+      border-top: 1px solid var(--color-light);
+      background-color: var(--color-dark);
+    }
+    
+    /* VOILA BUTTON STYLING - Updated with spike circle design and animation */
+    .voila-container {
+      position: fixed;
+      top: 100px;
+      right: 20%;
+      transform: translateX(50%);
+      z-index: 997;
+      width: 120px;
+      height: 120px;
+    }
+    
+    .voila-button {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-dark) 50%, var(--color-4) 50%, var(--color-4) 100%) !important;
+      color: var(--color-light);
+      font-size: 1.5rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* Create spike circle shape */
+      clip-path: polygon(
+        50% 0%, 63% 15%, 85% 5%, 80% 30%, 100% 35%, 85% 50%, 
+        100% 65%, 80% 70%, 85% 95%, 63% 85%, 50% 100%, 37% 85%, 
+        15% 95%, 20% 70%, 0% 65%, 15% 50%, 0% 35%, 20% 30%, 15% 5%, 37% 15%
+      );
+      /* Add animations */
+      animation: pulse 2s infinite, rotate 20s linear infinite;
+    }
+    
+    .voila-button:hover {
+      animation-play-state: paused;
+      transform: scale(1.1);
+    }
+    
+    /* Pulse animation */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    /* Slow rotation animation */
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .voila-container::before {
+      display: none;
+    }
+    
+    /* ARTICLE GRID */
+    .articles {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      background-color: var(--color-dark);
+    }
+    
+    .article {
+      position: relative;
+      border-top: 1px solid var(--color-light);
+      border-right: 1px solid var(--color-light);
+      padding: 20px;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .article:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .article-large {
+      grid-column: span 12;
+      padding: 40px;
+      min-height: 400px;
+    }
+    
+    .article-medium {
+      grid-column: span 6;
+    }
+    
+    .article-small {
+      grid-column: span 4;
+    }
+    
+    .article-title {
+      font-size: 3rem;
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      text-transform: uppercase;æ
+    }
+    
+    .article-large .article-title {
+      font-size: 5rem;
+    }
+    
+    .article-desc {
+      font-size: 1.1rem;
+      line-height: 1.3;
+      margin-top: auto;
+    }
+    
+    .article-meta {
+      font-size: 0.8rem;
+      margin-top: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    /* PINK SECTION */
+    .pink-section {
+      background-color: var(--color-2);
+      padding: 80px 0;
+      text-align: center;
+    }
+    
+    .pink-title {
+      font-size: 10vw;
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+    
+    .pink-content {
+      display: flex;
+      flex-direction: column;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .pink-image {
+      width: 100%;
+      height: auto;
+      margin-bottom: 40px;
+      object-fit: cover;
+    }
+    
+    .pink-text {
+      column-count: 2;
+      column-gap: 40px;
+      text-align: left;
+      font-size: 1.2rem;
+      line-height: 1.4;
+    }
+    
+    .pink-text p {
+      margin-bottom: 20px;
+    }
+    
+    /* ARTWORK CONTAINER */
+    .artwork-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    
+    .artwork-container.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    .artwork {
+      width: 80vw;
+      height: 80vh;
+      background-color: var(--color-dark);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .artwork-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      color: var(--color-light);
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* AI ARTWORK STYLING */
+    .ai-artwork-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+    
+    .ai-artwork {
+      max-width: 90%;
+      max-height: 60%;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    .ai-artwork-title {
+      font-size: 3rem;
+      margin: 30px 0 15px;
+      font-weight: 900;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+    
+    .ai-artwork-desc {
+      font-size: 1.1rem;
+      max-width: 60%;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .artwork-controls {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .control-btn {
+      padding: 12px 24px;
+      border: none;
+      background: var(--color-2);
+      color: var(--color-light);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .control-btn:hover {
+      background: var(--color-4);
+      transform: translateY(-3px);
+    }
+    
+    .loading {
+      font-size: 2.5rem;
+      color: var(--color-light);
+      text-align: center;
+      animation: blink 1s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    
+    /* RESPONSIVE STYLES */
+    @media (max-width: 1200px) {
+      .article-large,
+      .article-medium {
+        grid-column: span 12;
+      }
       
-      /* Reset to original */
+      .article-small {
+        grid-column: span 6;
+      }
+      
+      .pink-text {
+        column-count: 1;
+      }
+      
+      .header-logo {
+        font-size: 5rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .article-small {
+        grid-column: span 12;
+      }
+      
+      .headline,
+      .pink-title {
+        font-size: 15vw;
+      }
+      
+      .article-large .article-title {
+        font-size: 3rem;
+      }
+      
+      .header-logo {
+        font-size: 2.5rem;
+      }
+      
+      .menu-item {
+        font-size: 3rem;
+      }
+      
+      .ai-artwork-desc {
+        max-width: 90%;
+      }
+      
+      /* Enhanced mobile styles */
+      .marquee-banner {
+        height: 60px;
+      }
+      
       .marquee-content {
-        animation-duration: 40s;
+        font-size: 14px;
+        padding: 10px 0;
       }
       
-      .article {
-        border-right: 1px solid var(--color-light);
+      .marquee-content-reverse {
+        top: 35px;
       }
       
-      /* Reset VOILA button positioning */
+      /* Update VOILA button for tablets */
       .voila-container {
-        left: 60px;
-        top: 15px;
-        right: auto;
+        top: 80px;
+        width: 90px;
+        height: 90px;
       }
       
-      /* Remove added padding */
-      .clean-layout-content {
-        padding: 0;
+      .voila-button {
+        width: 90px;
+        height: 90px;
+        font-size: 1.2rem;
       }
       
-      /* Reset background size */
-      body {
-        background-size: 200% 100%;
+      .quote-banner {
+        padding: 40px 20px;
+        border-width: 10px;
       }
       
+      .quote-text {
+        font-size: 1.8rem;
+      }
+      
+      .quote-author {
+        font-size: 1rem;
+      }
+      
+      .header {
+        padding: 30px 15px;
+      }
+      
+      .header-subtitle {
+        font-size: 1rem;
+      }
+      
+      .hamburger {
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        padding: 12px;
+      }
+      
+      .logo {
+        top: 20px;
+        left: 20px;
+        font-size: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
       .header-logo {
         font-size: 2.2rem;
       }
@@ -448,7 +787,9 @@
         top: 30px;
       }
       
+      /* Update VOILA button for small mobile */
       .voila-container {
+        top: 70px;
         width: 80px;
         height: 80px;
       }
@@ -457,6 +798,16 @@
         width: 80px;
         height: 80px;
         font-size: 1rem;
+      }
+      
+      .article {
+        padding: 15px;
+        min-height: 200px;
+      }
+      
+      .article-large {
+        padding: 25px;
+        min-height: 300px;
       }
       
       .article-title {
@@ -469,7 +820,6 @@
       
       .article-desc {
         font-size: 1rem;
-        line-height: 1.5;
       }
       
       .pink-title {
@@ -480,14 +830,13 @@
         padding: 40px 0;
       }
       
-      /* Better mobile menu spacing */
       .menu-overlay .menu-items {
-        gap: 5px;
+        gap: 10px;
       }
       
       .menu-item {
         font-size: 2rem;
-        padding: 8px 0;
+        padding: 5px 0;
       }
       
       .fullpage-article-header {
@@ -506,21 +855,14 @@
         font-size: 1rem;
       }
       
-      .fullpage-article-close {
-        position: fixed;
-        top: 30px;
-        right: 30px;
-        width: 50px;
-        height: 50px;
-        background: var(--color-dark);
-        border: none;
-        color: var(--color-light);
-        font-size: 2rem;
-        cursor: pointer;
-        z-index: 1001;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      /* Fix for mobile gradient background */
+      body {
+        background-size: 200% 100%;
+      }
+      
+      .voila-container {
+        left: 60px;
+        top: 15px;
       }
     }
     
@@ -533,11 +875,11 @@
         font-size: 1.5rem;
       }
       
-      /* Reset position */
+      /* Smallest screen VOILA button */
       .voila-container {
-        left: 60px;
-        top: 15px;
-        right: auto;
+        top: 60px;
+        width: 60px;
+        height: 60px;
       }
       
       .voila-button {
@@ -791,17 +1133,6 @@
         grid-template-columns: repeat(2, 1fr);
       }
     }
-    
-    /* VOILA BUTTON STYLING - Updated with spike circle design and animation */
-    .voila-container {
-      position: fixed;
-      top: 100px;
-      right: 20%;
-      transform: translateX(50%);
-      z-index: 997;
-      width: 120px;
-      height: 120px;
-    }
   </style>
 </head>
 <body>
@@ -906,8 +1237,8 @@
           <div class="color-block" style="background-color: var(--color-2);"></div>
           <div class="color-block" style="background-color: var(--color-3);"></div>
           <div class="color-block" style="background-color: var(--color-4);"></div>
-        </div>
-        
+      </div>
+      
         <div class="pink-text">
           <p>The landscape of creative expression is undergoing a profound transformation with the emergence of AI-generated art. NOKO.AI stands at the forefront of this revolution, pushing the boundaries of what's possible when machine learning algorithms collaborate with human intuition.</p>
           
@@ -1090,5 +1421,3 @@
   </script>
 </body>
 </html>
-
-
