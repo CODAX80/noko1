@@ -382,12 +382,12 @@
     color: var(--color-light);
     text-transform: uppercase;
     transition: transform 0.3s ease;
-    animation: rotate 20s linear infinite;
+    transform: rotate(180deg);
     border: none;
   }
   
   .logo:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(180deg);
   }
   
   /* SECTION STYLING */
@@ -492,14 +492,14 @@
     top: 30px;
     right: 100px; /* Position to the left of hamburger menu */
     z-index: 997;
-    width: 80px;
-    height: 80px;
+    width: 100px; /* Increased by 25% from 80px */
+    height: 100px; /* Increased by 25% from 80px */
   }
   
   .voila-button-topright {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--color-4), var(--color-1));
+    width: 100px; /* Increased by 25% from 80px */
+    height: 100px; /* Increased by 25% from 80px */
+    background: linear-gradient(135deg, #444, #111);
     color: var(--color-light);
     font-size: 1rem;
     font-weight: 900;
@@ -515,10 +515,10 @@
       100% 65%, 80% 70%, 85% 95%, 63% 85%, 50% 100%, 37% 85%, 
       15% 95%, 20% 70%, 0% 65%, 15% 50%, 0% 35%, 20% 30%, 15% 5%, 37% 15%
     );
-    animation: pulse 2s infinite;
+    animation: rotate 10s linear infinite;
   }
   
-  .voila-button:hover {
+  .voila-button-topright:hover {
     animation-play-state: paused;
     transform: scale(1.1);
   }
