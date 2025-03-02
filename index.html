@@ -30,12 +30,12 @@
     }
     
     body {
-      /* Responsive gradient - horizontal on desktop, vertical on mobile */
+      /* Change from vertical gradient to horizontal 50-50 split */
       background: linear-gradient(90deg, var(--color-1) 0%, var(--color-1) 50%, var(--color-4) 50%, var(--color-4) 100%);
       color: var(--color-light);
       overflow-x: hidden;
       cursor: default;
-      background-size: 100% 100%;
+      background-size: 100% 100%; /* Adjust background size for vertical gradient */
     }
     
     /* SCROLLBAR STYLING */
@@ -347,36 +347,41 @@
         grid-row: span 2;
       }
       
-      /* Speed up marquee animation on mobile */
+      /* Remove the vertical gradient switch - keep horizontal gradient on all screen sizes */
+      body {
+        background: linear-gradient(90deg, var(--color-1) 0%, var(--color-1) 50%, var(--color-4) 50%, var(--color-4) 100%);
+      }
+      
+      /* Reset marquee animation to original */
       .marquee-content {
-        animation-duration: 30s;
+        animation-duration: 40s;
       }
       
       .marquee-item {
-        margin: 0 15px;
+        margin: 0 20px;
       }
       
-      /* Better positioning for mobile navigational elements */
+      /* Reset original positions */
       .hamburger {
-        top: 15px;
-        right: 15px;
-        width: 50px;
-        height: 50px;
-        padding: 12px;
+        top: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        padding: 15px;
       }
       
       .logo {
-        top: 15px;
-        left: 15px;
-        font-size: 1.2rem;
-        padding: 8px 12px;
+        top: 30px;
+        left: 30px;
+        font-size: 1.5rem;
+        padding: 10px 15px;
       }
       
-      /* Reposition VOILA button for better mobile layout */
+      /* Reset VOILA button */
       .voila-container {
-        top: 80px;
-        right: 30px;
-        transform: none;
+        top: 100px;
+        right: 20%;
+        transform: translateX(50%);
       }
     }
     
@@ -391,15 +396,30 @@
         aspect-ratio: 16/9; /* Switch to landscape on very small screens */
       }
       
-      /* Even faster marquee for small screens */
+      /* Reset to original */
       .marquee-content {
-        animation-duration: 25s;
+        animation-duration: 40s;
       }
       
       .article {
-        padding: 15px;
-        min-height: 200px;
-        border-right: none; /* Remove right borders on mobile */
+        border-right: 1px solid var(--color-light);
+      }
+      
+      /* Reset VOILA button positioning */
+      .voila-container {
+        left: 60px;
+        top: 15px;
+        right: auto;
+      }
+      
+      /* Remove added padding */
+      .clean-layout-content {
+        padding: 0;
+      }
+      
+      /* Reset background size */
+      body {
+        background-size: 200% 100%;
       }
       
       .header-logo {
@@ -429,7 +449,6 @@
       }
       
       .voila-container {
-        top: 70px;
         width: 80px;
         height: 80px;
       }
@@ -487,21 +506,21 @@
         font-size: 1rem;
       }
       
-      /* Fix mobile button position to prevent overlap */
-      .voila-container {
-        right: 20px;
-        left: auto;
-        top: 80px;
-      }
-      
-      /* Ensure content doesn't touch edges */
-      .clean-layout-content {
-        padding: 0 10px;
-      }
-      
-      /* Fixed mobile background size */
-      body {
-        background-size: 100% 200%;
+      .fullpage-article-close {
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--color-dark);
+        border: none;
+        color: var(--color-light);
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 1001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
     
@@ -514,11 +533,11 @@
         font-size: 1.5rem;
       }
       
-      /* Smallest screen VOILA button */
+      /* Reset position */
       .voila-container {
-        top: 70px;
-        width: 60px;
-        height: 60px;
+        left: 60px;
+        top: 15px;
+        right: auto;
       }
       
       .voila-button {
@@ -568,12 +587,6 @@
       
       .fullpage-article-text {
         font-size: 1rem;
-      }
-      
-      /* Better position for smallest screens */
-      .voila-container {
-        right: 15px;
-        top: 70px;
       }
     }
     
@@ -1077,4 +1090,5 @@
   </script>
 </body>
 </html>
+
 
