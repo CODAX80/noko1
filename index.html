@@ -32,7 +32,43 @@
     background: var(--color-dark);
     color: var(--color-light);
     overflow-x: hidden;
-    cursor: default;
+    cursor: none; /* Hide default cursor */
+  }
+  
+  /* Custom Cursor */
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-light);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    mix-blend-mode: difference;
+    transition: transform 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .custom-cursor::after {
+    content: "";
+    width: 4px;
+    height: 4px;
+    background-color: var(--color-light);
+    border-radius: 50%;
+  }
+  
+  .custom-cursor.expand {
+    transform: scale(2);
+    background-color: rgba(255, 255, 255, 0.1);
+    mix-blend-mode: difference;
+  }
+  
+  a, button, [role="button"], .article, .hamburger {
+    cursor: none;
   }
   
   /* SCROLLBAR STYLING */
@@ -122,10 +158,51 @@
     position: relative;
     z-index: 10;
     background-color: transparent;
+    position: relative;
+  }
+  
+  /* Hero Image */
+  .hero-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+  }
+  
+  .hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.8) contrast(1.2);
+    transform: scale(1.1);
+    animation: subtle-zoom 20s infinite alternate ease-in-out;
+  }
+  
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+    mix-blend-mode: multiply;
+  }
+  
+  @keyframes subtle-zoom {
+    0% { transform: scale(1.1); }
+    100% { transform: scale(1.2); }
   }
   
   .header-logo {
-    font-size: clamp(4rem, 8vw, 8rem);
+    font-size: clamp(5rem, 10vw, 10rem); /* Increased by 25% from 4rem/8rem */
     font-weight: 900;
     letter-spacing: -3px;
     line-height: 0.9;
@@ -133,7 +210,11 @@
     text-transform: uppercase;
     position: relative;
     display: inline-block;
-    color: white;
+    color: var(--color-light); /* Plain light color */
+  }
+  
+  .logo-left, .logo-right {
+    color: var(--color-light); /* Both spans now use the light color */
   }
   
   .header-logo span {
@@ -141,25 +222,13 @@
     position: relative;
   }
   
+  /* Remove these styles as we're removing the elements */
   .header-logo .dollar {
-    background-color: var(--color-dark);
-    color: var(--color-light);
-    padding: 0 10px;
-    margin-right: -10px;
-    font-size: 0.5em;
-    vertical-align: top;
+    display: none;
   }
   
   .header-logo .close {
-    background-color: var(--color-dark);
-    color: var(--color-light);
-    padding: 5px 15px;
-    border-radius: 50px;
-    font-size: 0.2em;
-    vertical-align: super;
-    margin-left: -10px;
-    line-height: 1.1;
-    display: inline-block;
+    display: none;
   }
   
   @keyframes float {
@@ -307,6 +376,27 @@
     transform: translateY(-100%);
     transition: transform 0.8s var(--transition-smooth);
     backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .menu-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="8" fill="rgba(238,137,75,0.1)"/></svg>');
+    background-size: 80px 80px;
+    opacity: 0;
+    transition: opacity 1.5s ease, transform 30s linear;
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  .menu-overlay.active .menu-pattern {
+    opacity: 0.5;
+    transform: rotate(45deg);
   }
   
   .menu-overlay.active {
@@ -390,115 +480,19 @@
     transform: scale(1.1) rotate(180deg);
   }
   
-  /* SECTION STYLING */
-  section {
-    width: 100%;
-    position: relative;
-    padding: 0;
-    margin: 0;
-    border-bottom: 1px solid var(--color-light);
-  }
-  
-  /* MAIN STORY */
-  .main-story {
-    background-color: var(--color-dark);
-    padding: 0;
-    position: relative;
-    border-top: 1px solid var(--color-light);
-  }
-  
-  /* CLEAN LAYOUT */
-  .clean-layout {
-    padding: 100px 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-    background-color: var(--color-dark);
-    position: relative;
-  }
-  
-  .clean-layout-header {
-    text-align: center;
-    position: relative;
-  }
-  
-  .headline {
-    font-size: clamp(3rem, 10vw, 8rem);
-    font-weight: 900;
-    letter-spacing: -3px;
-    line-height: 1;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    color: var(--color-dark);
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease, transform 1s ease;
-  }
-  
-  .headline.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .subheadline {
-    font-size: clamp(1.2rem, 2vw, 1.8rem);
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.4;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
-  }
-  
-  .subheadline.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .clean-layout-content {
-    max-width: 800px;
-    margin: 0 auto;
-    font-size: clamp(1rem, 1.5vw, 1.3rem);
-    line-height: 1.6;
-  }
-  
-  .clean-layout-content p {
-    margin-bottom: 20px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  
-  .clean-layout-content p:nth-child(1) { transition-delay: 0.3s; }
-  .clean-layout-content p:nth-child(2) { transition-delay: 0.4s; }
-  
-  .clean-layout-content.in-view p {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .byline {
-    font-size: 1rem;
-    letter-spacing: 1px;
-    padding: 15px 20px;
-    text-transform: uppercase;
-    border-top: 1px solid var(--color-light);
-    background-color: var(--color-dark);
-  }
-  
-  /* VOILA BUTTON IN TOP RIGHT */
-  .voila-container-topright {
+  /* VOILA BUTTON IN TOP LEFT */
+  .voila-container-topleft{
     position: fixed;
     top: 30px;
-    right: 100px; /* Position to the left of hamburger menu */
+    left: 100px; 
     z-index: 997;
-    width: 100px; /* Increased by 25% from 80px */
-    height: 100px; /* Increased by 25% from 80px */
+    width: 120px; /* Increased by 25% from 80px */
+    height: 120px; /* Increased by 25% from 80px */
   }
   
-  .voila-button-topright {
-    width: 100px; /* Increased by 25% from 80px */
-    height: 100px; /* Increased by 25% from 80px */
+  .voila-button-topleft {
+    width: 120px; /* Increased by 25% from 80px */
+    height: 120px; /* Increased by 25% from 80px */
     background: linear-gradient(135deg, #444, #111);
     color: var(--color-light);
     font-size: 1rem;
@@ -516,9 +510,46 @@
       15% 95%, 20% 70%, 0% 65%, 15% 50%, 0% 35%, 20% 30%, 15% 5%, 37% 15%
     );
     animation: rotate 10s linear infinite;
+    overflow: hidden;
   }
   
-  .voila-button-topright:hover {
+  .voila-button-topleft::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/voila-texture.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+    mix-blend-mode: overlay;
+    z-index: -1;
+  }
+  
+  .voila-button-topleft::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, 
+      rgba(255,255,255,0) 30%, 
+      rgba(255,255,255,0.3) 45%, 
+      rgba(255,255,255,0.3) 55%, 
+      rgba(255,255,255,0) 70%
+    );
+    animation: shine 4s infinite;
+  }
+  
+  @keyframes shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+  }
+  
+  .voila-button-topleft:hover {
     animation-play-state: paused;
     transform: scale(1.1);
   }
@@ -548,7 +579,7 @@
     position: relative;
     border: 8px solid var(--color-4);
     margin: 0;
-    color: var(--color-dark);
+    color: var(--color-light);
     overflow: hidden;
   }
   
@@ -661,6 +692,32 @@
     background-color: var(--color-dark);
     transform: translateY(50px);
     opacity: 0;
+    overflow: hidden;
+  }
+  
+  .article-thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.2;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 0;
+  }
+  
+  .article:hover .article-thumbnail {
+    opacity: 0.3;
+    transform: scale(1.05);
+  }
+  
+  .article-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
   
   .article.in-view {
@@ -1102,6 +1159,9 @@
     max-width: 800px;
     font-size: clamp(1rem, 1.5vw, 1.3rem);
     line-height: 1.6;
+    color: var(--color-light);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
   }
   
   .fullpage-article-text p {
@@ -1159,10 +1219,16 @@
       column-count: 1;
     }
     
-    .voila-container {
-      top: 120px;
-      right: 30px;
-      transform: none;
+    .voila-container-topleft {
+      top: 100px;
+      left: 30px;
+      width: 100px;
+      height: 100px;
+    }
+    
+    .voila-button-topleft {
+      width: 100px;
+      height: 100px;
     }
   }
   
@@ -1171,15 +1237,15 @@
       grid-column: span 12;
     }
     
-    .voila-container {
+    .voila-container-topleft {
       top: auto;
       bottom: 30px;
-      right: 30px;
+      left: 30px;
       width: 90px;
       height: 90px;
     }
     
-    .voila-button {
+    .voila-button-topleft {
       width: 90px;
       height: 90px;
       font-size: 1.2rem;
@@ -1225,17 +1291,32 @@
       padding: 60px 20px 30px;
     }
     
-    .voila-container {
+    .voila-container-topleft {
       width: 70px;
       height: 70px;
-      right: 20px;
+      left: 20px;
       bottom: 20px;
     }
     
-    .voila-button {
+    .voila-button-topleft {
       width: 70px;
       height: 70px;
       font-size: 1rem;
+    }
+    
+    .hamburger {
+      width: 40px;
+      height: 40px;
+      padding: 10px;
+      top: 20px;
+      right: 20px;
+    }
+    
+    .logo {
+      top: 20px;
+      left: 20px;
+      font-size: 1.2rem;
+      padding: 8px 12px;
     }
     
     .marquee-banner {
@@ -1269,6 +1350,115 @@
       font-size: 1.5rem;
     }
   }
+  
+  /* SECTION STYLING */
+  section {
+    width: 100%;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid var(--color-light);
+  }
+  
+  /* MAIN STORY */
+  .main-story {
+    background-color: var(--color-dark);
+    padding: 0;
+    position: relative;
+    border-top: 1px solid var(--color-light);
+  }
+  
+  /* CLEAN LAYOUT */
+  .clean-layout {
+    padding: 100px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    background-color: transparent;
+    position: relative;
+  }
+  
+  .clean-layout-header {
+    text-align: center;
+    position: relative;
+  }
+  
+  .headline {
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 900;
+    letter-spacing: -3px;
+    line-height: 1;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: var(--color-light);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+    background: linear-gradient(to right, var(--color-1) 50%, var(--color-4) 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .headline.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .subheadline {
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
+    color: var(--color-light);
+  }
+  
+  .subheadline.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .clean-layout-content {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    line-height: 1.6;
+    color: var(--color-light);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+  }
+  
+  .clean-layout-content p {
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  
+  .clean-layout-content p:nth-child(1) { transition-delay: 0.3s; }
+  .clean-layout-content p:nth-child(2) { transition-delay: 0.4s; }
+  
+  .clean-layout-content.in-view p {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .byline {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 15px 20px;
+    text-transform: uppercase;
+    border-top: 1px solid var(--color-light);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: var(--color-light);
+  }
 </style>
 </head>
 <body>
@@ -1284,8 +1474,12 @@
 <div class="container">
   <!-- Header -->
   <header class="header">
+    <div class="hero-image-container">
+      <div class="hero-image"></div>
+      <div class="hero-overlay"></div>
+    </div>
     <h1 class="header-logo">
-      <span class="dollar">ノコ</span>NOKO<span class="close">CREATIVE<br>AI</span>
+      <span class="logo-left">NO</span><span class="logo-right">KO</span>
     </h1>
     <p class="header-subtitle">Where algorithms dream and pixels transcend into art. Exploring the boundaries between human creativity and artificial intelligence.</p>
   </header>
@@ -1325,7 +1519,7 @@
         <p>Our latest exhibition showcases a series of works that emerge from the conversation between artist and algorithm. These pieces challenge traditional notions of authorship and creativity, suggesting new paradigms for how we understand artistic expression in the digital age.</p>
       </div>
     </div>
-    <p class="byline">WORDS: EMMA STONE | IMAGES: NOKO.AI</p>
+    <p class="byline">WORDS: EMMA STONE | IMAGES: <NOKO-CHAN></NOKO-CHAN></p>
   </section>
   
   <!-- After the Main Story section and before the Article Grid -->
@@ -1337,39 +1531,57 @@
   <!-- Article Grid -->
   <div class="articles">
     <article class="article article-large" data-section="the-studio">
-      <h3 class="article-title">THE STUDIO</h3>
-      <p class="article-desc">A digital workshop where algorithms and human intuition collaborate to produce generative art that challenges perception and explores the nature of creativity.</p>
-      <p class="article-meta">IMAGES: FRKO | WORDS: COLLIER MEYERSON</p>
+      <img src="images/article1.jpg" alt="The Studio" class="article-thumbnail">
+      <div class="article-content">
+        <h3 class="article-title">THE STUDIO</h3>
+        <p class="article-desc">A digital workshop where algorithms and human intuition collaborate to produce generative art that challenges perception and explores the nature of creativity.</p>
+        <p class="article-meta">IMAGES: FRKO | WORDS: COLLIER MEYERSON</p>
+      </div>
     </article>
     
     <article class="article article-medium" data-section="who-created">
-      <h3 class="article-title">WHO CREATED NOKO?</h3>
-      <p class="article-desc">The mysterious origins behind the AI art collective that's redefining our understanding of machine creativity.</p>
-      <p class="article-meta">WORDS: EMILIA PETRARCA</p>
+      <img src="images/article2.jpg" alt="Who Created NOKO" class="article-thumbnail">
+      <div class="article-content">
+        <h3 class="article-title">WHO CREATED NOKO?</h3>
+        <p class="article-desc">The mysterious origins behind the AI art collective that's redefining our understanding of machine creativity.</p>
+        <p class="article-meta">WORDS: EMILIA PETRARCA</p>
+      </div>
     </article>
     
     <article class="article article-medium" data-section="five-weirdest">
-      <h3 class="article-title">FIVE WEIRDEST ARTWORKS EVER</h3>
-      <p class="article-desc">The most bizarre, unexpected, and mind-bending creations from the NOKO neural network.</p>
-      <p class="article-meta">IMAGES: SHUHUA XIONG | WORDS: CHRISTOPHER WALKER</p>
+      <img src="images/article3.jpg" alt="Five Weirdest Artworks" class="article-thumbnail">
+      <div class="article-content">
+        <h3 class="article-title">FIVE WEIRDEST ARTWORKS EVER</h3>
+        <p class="article-desc">The most bizarre, unexpected, and mind-bending creations from the NOKO neural network.</p>
+        <p class="article-meta">IMAGES: SHUHUA XIONG | WORDS: CHRISTOPHER WALKER</p>
+      </div>
     </article>
     
     <article class="article article-small" data-section="run-by-many">
-      <h3 class="article-title">NOKO-CHAN: RUN BY MANY</h3>
-      <p class="article-desc">How a decentralized team of artists, coders, and visionaries guide the NOKO project.</p>
-      <p class="article-meta">BY BOB JEUSETTE & EMMA HAZEN</p>
+      <img src="images/article4.jpg" alt="NOKO-CHAN: Run By Many" class="article-thumbnail">
+      <div class="article-content">
+        <h3 class="article-title">NOKO-CHAN: RUN BY MANY</h3>
+        <p class="article-desc">How a decentralized team of artists, coders, and visionaries guide the NOKO project.</p>
+        <p class="article-meta">BY BOB JEUSETTE & EMMA HAZEN</p>
+      </div>
     </article>
     
     <article class="article article-small" data-section="banksy">
-      <h3 class="article-title">BANKSY AND NOKO-CHAN</h3>
-      <p class="article-desc">Street art meets artificial intelligence in a groundbreaking collaboration.</p>
-      <p class="article-meta">IMAGES: STEVEN MONTINAR | WORDS: MALCOLM SMITH</p>
+      <img src="images/article5.jpg" alt="Banksy and NOKO-CHAN" class="article-thumbnail">
+      <div class="article-content">
+        <h3 class="article-title">BANKSY AND NOKO-CHAN</h3>
+        <p class="article-desc">Street art meets artificial intelligence in a groundbreaking collaboration.</p>
+        <p class="article-meta">IMAGES: STEVEN MONTINAR | WORDS: MALCOLM SMITH</p>
+      </div>
     </article>
     
     <article class="article article-small" data-section="mine-noko">
-      <h3 class="article-title">YOU CAN MINE NOKO-CHAN WHERE?</h3>
-      <p class="article-desc">Exploring the computational resources behind the AI art phenomenon.</p>
-      <p class="article-meta">WORDS: MARGARET RHODES</p>
+      <img src="images/article6.jpg" alt="You Can Mine NOKO-CHAN Where?" class="article-thumbnail">
+      <div class="article-content">
+        <h3 class="article-title">YOU CAN MINE NOKO-CHAN WHERE?</h3>
+        <p class="article-desc">Exploring the computational resources behind the AI art phenomenon.</p>
+        <p class="article-meta">WORDS: MARGARET RHODES</p>
+      </div>
     </article>
   </div>
   
@@ -1402,8 +1614,6 @@
   </section>
 </div>
 
-<!-- Logo with rotating animation -->
-<div class="logo" id="voilaBtn">VOILA</div>
 
 <!-- Hamburger Menu Button -->
 <div class="hamburger">
@@ -1414,6 +1624,7 @@
 
 <!-- Menu Overlay -->
 <div class="menu-overlay">
+  <div class="menu-pattern"></div>
   <div class="menu-items">
     <a href="#" class="menu-item">HOME</a>
     <a href="#" class="menu-item">THE STUDIO</a>
@@ -1424,9 +1635,9 @@
   </div>
 </div>
 
-<!-- Voila Button (placed in the top right of the screen) -->
-<div class="voila-container-topright">
-  <button class="voila-button-topright" id="voilaButtonTopRight">VOILA</button>
+<!-- Voila Button (star-shaped rotating button in top-left) -->
+<div class="voila-container-topleft">
+  <button class="voila-button-topleft" id="voilaButtonTopLeft">VOILA</button>
 </div>
 
 <!-- Artwork Container (Lightbox) -->
@@ -1463,8 +1674,29 @@
     });
   };
   
-  // Initialize animations on load
+  // Custom cursor
   document.addEventListener('DOMContentLoaded', () => {
+    const cursor = document.createElement('div');
+    cursor.className = 'custom-cursor';
+    document.body.appendChild(cursor);
+    
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+    });
+    
+    // Add expand effect on interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, [role="button"], .article, .hamburger');
+    interactiveElements.forEach(element => {
+      element.addEventListener('mouseenter', () => {
+        cursor.classList.add('expand');
+      });
+      element.addEventListener('mouseleave', () => {
+        cursor.classList.remove('expand');
+      });
+    });
+    
+    // Initialize animations on load
     setTimeout(() => {
       animateOnScroll();
     }, 300);
@@ -1499,36 +1731,64 @@
   });
   
   // Voila button functionality
-  const voilaButton = document.getElementById('voilaBtn');
+  const voilaButtonTopLeft = document.getElementById('voilaButtonTopLeft');
   const artworkContainer = document.getElementById('artworkContainer');
   const artworkClose = document.getElementById('artworkClose');
   const artwork = document.getElementById('artwork');
   
-  voilaButton.addEventListener('click', () => {
+  // Function to generate AI artwork
+  const generateArtwork = () => {
     // Show loading state in the artwork container
     artwork.innerHTML = '<div class="loading">Generating AI Masterpiece</div>';
     artworkContainer.classList.add('active');
     
     // Simulate AI art generation (would be replaced with actual API call)
     setTimeout(() => {
-      // Get random parameters for AI art
-      const styles = ['abstract', 'surreal', 'minimal', 'expressionist', 'cubist'];
-      const subjects = ['portrait', 'landscape', 'cityscape', 'nature', 'dream'];
-      const colors = ['neon', 'monochrome', 'pastel', 'vivid', 'dark'];
+      // Define possible artwork styles and parameters
+      const artStyles = [
+        { 
+          name: 'Abstract',
+          image: 'images/artwork1.jpg',
+          description: 'A vibrant exploration of color and form, generated using recursive algorithms that simulate the spontaneity of abstract expressionism.'
+        },
+        { 
+          name: 'Digital Dreamscape',
+          image: 'images/artwork2.jpg',
+          description: 'A surreal landscape that merges natural elements with digital artifacts, creating a dreamlike space that exists between realities.'
+        },
+        { 
+          name: 'Geometric Harmony',
+          image: 'images/artwork3.jpg',
+          description: 'Precise mathematical patterns converge in this piece, demonstrating the inherent beauty in geometric relationships and sacred proportions.'
+        },
+        { 
+          name: 'Neural Synthesis',
+          image: 'images/artwork4.jpg',
+          description: 'An exploration of how neural networks perceive and reconstruct visual information, revealing the unique aesthetic of machine perception.'
+        },
+        { 
+          name: 'Quantum Portrait',
+          image: 'images/artwork5.jpg',
+          description: 'A probabilistic rendering that represents the subject in multiple states simultaneously, inspired by quantum mechanics principles.'
+        }
+      ];
       
-      const randomStyle = styles[Math.floor(Math.random() * styles.length)];
-      const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      // Select a random artwork style
+      const randomStyle = artStyles[Math.floor(Math.random() * artStyles.length)];
       
-      // Generate a unique title
-      const artTitle = `${randomColor.charAt(0).toUpperCase() + randomColor.slice(1)} ${randomSubject.charAt(0).toUpperCase() + randomSubject.slice(1)} in ${randomStyle} Style`;
+      // Create a unique title with timestamp
+      const timestamp = new Date().toISOString().replace(/[^0-9]/g, '').slice(0, 14);
+      const artTitle = `${randomStyle.name} #${timestamp}`;
+      
+      // Determine if we should use a fallback image
+      const imageSrc = randomStyle.image || `https://source.unsplash.com/random/800x600/?art,${randomStyle.name.toLowerCase().replace(/\s+/g, ',')}`;
       
       // Create artwork content
       artwork.innerHTML = `
         <div class="ai-artwork-container">
-          <img src="https://source.unsplash.com/random/800x600/?art,${randomStyle},${randomSubject},${randomColor}" class="ai-artwork" alt="${artTitle}">
+          <img src="${imageSrc}" class="ai-artwork" alt="${artTitle}">
           <h2 class="ai-artwork-title">${artTitle}</h2>
-          <p class="ai-artwork-desc">Generated using advanced neural networks trained on diverse artistic styles, this piece explores the intersection of ${randomSubject} imagery with ${randomStyle} aesthetics in a ${randomColor} palette.</p>
+          <p class="ai-artwork-desc">${randomStyle.description}</p>
           <div class="artwork-controls">
             <button class="control-btn regenerate">Regenerate</button>
             <button class="control-btn download">Download</button>
@@ -1542,73 +1802,42 @@
         // Simulate regeneration
         artworkContainer.classList.remove('active');
         setTimeout(() => {
-          voilaButton.click();
+          generateArtwork();
         }, 300);
       });
       
       document.querySelector('.download').addEventListener('click', () => {
-        alert('Download functionality would be connected to an actual download service in production.');
-      });
-      
-      document.querySelector('.share').addEventListener('click', () => {
-        alert('Share functionality would be connected to social media APIs in production.');
-      });
-    }, 2000);
-  });
-  
-  const voilaButtonTopRight = document.getElementById('voilaButtonTopRight');
-  
-  voilaButtonTopRight.addEventListener('click', () => {
-    // Show loading state in the artwork container
-    artwork.innerHTML = '<div class="loading">Generating AI Masterpiece</div>';
-    artworkContainer.classList.add('active');
-    
-    // Use same functionality as the other VOILA button
-    setTimeout(() => {
-      // Get random parameters for AI art
-      const styles = ['abstract', 'surreal', 'minimal', 'expressionist', 'cubist'];
-      const subjects = ['portrait', 'landscape', 'cityscape', 'nature', 'dream'];
-      const colors = ['neon', 'monochrome', 'pastel', 'vivid', 'dark'];
-      
-      const randomStyle = styles[Math.floor(Math.random() * styles.length)];
-      const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
-      
-      // Generate a unique title
-      const artTitle = `${randomColor.charAt(0).toUpperCase() + randomColor.slice(1)} ${randomSubject.charAt(0).toUpperCase() + randomSubject.slice(1)} in ${randomStyle} Style`;
-      
-      // Create artwork content
-      artwork.innerHTML = `
-        <div class="ai-artwork-container">
-          <img src="https://source.unsplash.com/random/800x600/?art,${randomStyle},${randomSubject},${randomColor}" class="ai-artwork" alt="${artTitle}">
-          <h2 class="ai-artwork-title">${artTitle}</h2>
-          <p class="ai-artwork-desc">Generated using advanced neural networks trained on diverse artistic styles, this piece explores the intersection of ${randomSubject} imagery with ${randomStyle} aesthetics in a ${randomColor} palette.</p>
-          <div class="artwork-controls">
-            <button class="control-btn regenerate">Regenerate</button>
-            <button class="control-btn download">Download</button>
-            <button class="control-btn share">Share</button>
-          </div>
-        </div>
-      `;
-      
-      // Add event listeners to the buttons
-      document.querySelector('.regenerate').addEventListener('click', () => {
-        // Simulate regeneration
-        artworkContainer.classList.remove('active');
+        // Simulate download with animation
+        const downloadButton = document.querySelector('.download');
+        downloadButton.textContent = 'Downloading...';
+        downloadButton.disabled = true;
+        
         setTimeout(() => {
-          voilaButtonTopRight.click();
-        }, 300);
-      });
-      
-      document.querySelector('.download').addEventListener('click', () => {
-        alert('Download functionality would be connected to an actual download service in production.');
+          downloadButton.textContent = 'Downloaded!';
+          setTimeout(() => {
+            downloadButton.textContent = 'Download';
+            downloadButton.disabled = false;
+          }, 1500);
+        }, 1000);
       });
       
       document.querySelector('.share').addEventListener('click', () => {
-        alert('Share functionality would be connected to social media APIs in production.');
+        // Simulate share functionality
+        const shareButton = document.querySelector('.share');
+        shareButton.textContent = 'Sharing...';
+        
+        setTimeout(() => {
+          shareButton.textContent = 'Shared!';
+          setTimeout(() => {
+            shareButton.textContent = 'Share';
+          }, 1500);
+        }, 1000);
       });
     }, 2000);
-  });
+  };
+  
+  // Add event listener to VOILA button
+  voilaButtonTopLeft.addEventListener('click', generateArtwork);
   
   // Artwork close button functionality
   artworkClose.addEventListener('click', () => {
